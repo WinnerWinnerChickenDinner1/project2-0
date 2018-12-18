@@ -9,6 +9,14 @@ package view;
 import java.awt.Toolkit;
 
 import info.Company;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.GroupLayout;
+import javax.swing.LayoutStyle.ComponentPlacement;
+import javax.swing.JButton;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -102,69 +110,47 @@ public class Showreason extends javax.swing.JFrame {
 				jButton8ActionPerformed(evt);
 			}
 		});
+		
+		button = new JButton();
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Showreason().setVisible(true);
+			}
+		});
+		button.setText("\u7528\u6237\u7BA1\u7406");
+		button.setForeground(Color.WHITE);
+		button.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 23));
+		button.setBorder(null);
+		button.setBackground(new Color(170, 187, 195));
 
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
 				jPanel2);
+		jPanel2Layout.setHorizontalGroup(
+			jPanel2Layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(jPanel2Layout.createSequentialGroup()
+					.addComponent(jButton1, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(jButton2, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+					.addGap(12)
+					.addComponent(jButton3, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+					.addComponent(jButton4, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(jButton8, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(button, GroupLayout.PREFERRED_SIZE, 172, GroupLayout.PREFERRED_SIZE))
+		);
+		jPanel2Layout.setVerticalGroup(
+			jPanel2Layout.createParallelGroup(Alignment.LEADING)
+				.addGroup(Alignment.TRAILING, jPanel2Layout.createParallelGroup(Alignment.BASELINE)
+					.addComponent(jButton1, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+					.addComponent(button, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+					.addComponent(jButton8, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+					.addComponent(jButton4, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+					.addComponent(jButton3, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+					.addComponent(jButton2, GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE))
+		);
 		jPanel2.setLayout(jPanel2Layout);
-		jPanel2Layout
-				.setHorizontalGroup(jPanel2Layout
-						.createParallelGroup(
-								javax.swing.GroupLayout.Alignment.LEADING)
-						.addGroup(
-								jPanel2Layout
-										.createSequentialGroup()
-										.addGap(90, 90, 90)
-										.addComponent(
-												jButton1,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												172,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton2,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												172,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton3,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												172,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton4,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												172,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addPreferredGap(
-												javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-										.addComponent(
-												jButton8,
-												javax.swing.GroupLayout.PREFERRED_SIZE,
-												172,
-												javax.swing.GroupLayout.PREFERRED_SIZE)
-										.addContainerGap(94, Short.MAX_VALUE)));
-		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(
-				javax.swing.GroupLayout.Alignment.LEADING).addComponent(
-				jButton1, javax.swing.GroupLayout.Alignment.TRAILING,
-				javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
-				.addComponent(jButton2,
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 51,
-						Short.MAX_VALUE).addComponent(jButton3,
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 51,
-						Short.MAX_VALUE).addComponent(jButton4,
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 51,
-						Short.MAX_VALUE).addComponent(jButton8,
-						javax.swing.GroupLayout.Alignment.TRAILING,
-						javax.swing.GroupLayout.DEFAULT_SIZE, 51,
-						Short.MAX_VALUE));
 
 		jTable1.setModel(new javax.swing.table.DefaultTableModel(
 				obj, new String[] { "¿Ì”…",
@@ -277,6 +263,7 @@ public class Showreason extends javax.swing.JFrame {
 	private javax.swing.JScrollPane jScrollPane1;
 	private javax.swing.JTable jTable1;
 	private Object[][] obj = new Company().showReason();
+	private JButton button;
 	// End of variables declaration//GEN-END:variables
 
 }
