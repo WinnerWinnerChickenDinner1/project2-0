@@ -314,7 +314,12 @@ public class Adminview extends javax.swing.JFrame {
 		if(i==-1){
 			JOptionPane.showMessageDialog(null, "选中一行后才可下架对应电影");
 		}else{
+			String why = "未输入原因";
+			why  =JOptionPane.showInputDialog("请输入修改原因");
+			String happened = "删除电影："+obj[i][1].toString();
+			
 		 new Company().Deleteflim(obj[i][1].toString());
+		 new Company().saveReason(why, happened);
 		 obj = new Company().showFilm();
 		 jTable1.setModel(new javax.swing.table.DefaultTableModel(
 					obj, new String[] { "排名",

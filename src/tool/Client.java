@@ -56,6 +56,8 @@ import javax.swing.JOptionPane;
 		final int COMSUME = 30;
 		final int SHOWOPERATION = 31;
 		final int GETTRAILER = 32;
+		final int REASON = 33;
+		final int SHOWREASON = 34;
 		
 		static ObjectOutputStream oos;
 		static ObjectInputStream ois;
@@ -689,6 +691,45 @@ import javax.swing.JOptionPane;
 					e.printStackTrace();
 				}
 				 return path;
+			 }
+			 public void reason(String reason,String happened) throws IOException {
+				 oos.writeInt(REASON);
+				 oos.flush();
+				 oos.writeUTF(reason);
+				 oos.flush();
+				 oos.writeUTF(happened);;
+				 oos.flush();
+				 String i ;
+				 i = ois.readUTF();
+				 if(i!="ok") {
+					 JOptionPane.showMessageDialog(null, "添加原因成功");
+				 }
+				 else {
+					 JOptionPane.showMessageDialog(null, "添加原因失败");
+				 }
+			 }
+			 
+			 public Object[][] showreason(){
+				 Object[][] reason = null;
+					try {
+						oos.writeInt(SHOWREASON);
+						oos.flush();
+						List reasonlist = (List) ois.readObject();
+						reason = new Object[reasonlist.size()][3];
+						for(int i = 0;i<reasonlist.size();i++){
+							Object[] strs = (Object[]) reasonlist.get(i);
+							reason[i][0] = strs[0];
+							reason[i][1] = strs[1];
+							reason[i][2] = strs[2];
+						}
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					return reason;
 			 }
 			
 		public static void main(String[] args) {

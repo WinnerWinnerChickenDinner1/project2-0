@@ -352,5 +352,27 @@ public class Company implements Serializable{
 		return operationlist;
 	}
 
-
+   public void saveReason(String reason,String happened) {
+	   try {
+		new Client().reason(reason, happened);
+	} catch (UnknownHostException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+   }
+   public Object[][] showReason(){
+	   try {
+		return new Client().showreason();
+	} catch (UnknownHostException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	   return null;
+   }
 }

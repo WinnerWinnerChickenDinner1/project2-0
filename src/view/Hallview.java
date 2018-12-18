@@ -320,7 +320,12 @@ public class Hallview extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(null,"请选择一行信息在进行操作");
 		}
 		else{
+			String why = "未输入原因";
+			why  =JOptionPane.showInputDialog("请输入修改原因");
+			String happened = "删除了"+obj[i][0].toString()+"号厅放映的"+obj[i][1]+",放映时间为："+obj[i][2].toString();
+			
 		new Company().deletemoviehall(obj[i][0].toString());
+		new Company().saveReason(why, happened);
 		 obj=new Company().showmoviehall();
 			jTable1.setModel(new javax.swing.table.DefaultTableModel(
 					obj, new String[] { "影厅编号",

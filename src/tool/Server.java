@@ -64,6 +64,8 @@ public class Server implements Runnable{
 	final int COMSUME = 30;
 	final int SHOWOPERATION = 31;
 	final int GETTRAILER = 32;
+	final int REASON = 33;
+	final int SHOWREASON = 34;
 	
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
@@ -71,8 +73,10 @@ public class Server implements Runnable{
 	public Server() throws IOException, ClassNotFoundException, SQLException {
 		
 		 ServerSocket ss = new ServerSocket(51512);
+		 System.out.println(ss);
 		 while(true){
 		 s = ss.accept();
+		 System.out.println(s);
 		 new Thread(this).start();
 		 }
 		}
@@ -686,6 +690,31 @@ public void showvip(){//展示所有vip
 		}
 		
 	}
+	public void reason() throws IOException, ClassNotFoundException, SQLException {
+		String reason = ois.readUTF();
+		String happened = ois.readUTF();
+		Timestamp time = new Timestamp(System.currentTimeMillis());
+		String sql = "insert into reason values('"+reason+"','"+time+"','"+happened+"')";
+		Datahandle.getStatement().executeUpdate(sql);
+		oos.writeUTF("ok");
+		oos.flush();
+	}
+	
+	public void showReason() throws SQLException, ClassNotFoundException, IOException{
+		String sql = "select * from reason";
+		ResultSet rs = Datahandle.getStatement().executeQuery(sql);
+		List reasonlist = new ArrayList();
+		while(rs.next()){
+			String reason= rs.getString(1);
+			String happened = rs.getString(3);
+			Timestamp time = rs.getTimestamp(2);
+			Object[] operation1 = {reason,happened,time};
+			reasonlist.add(operation1);
+		}
+		
+		oos.writeObject(reasonlist);
+		oos.flush();
+	}
 	public void run() {
 		// TODO Auto-generated method stub
 		 try {
@@ -782,6 +811,12 @@ public void showvip(){//展示所有vip
 			}
 			if(i==GETTRAILER) {
 				getTrailer();
+			}
+			if(i==REASON) {
+				reason();
+			}
+			if(i==SHOWREASON) {
+				showReason();
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
