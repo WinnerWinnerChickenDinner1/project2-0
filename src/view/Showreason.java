@@ -89,7 +89,7 @@ public class Showreason extends javax.swing.JFrame {
 			}
 		});
 
-		jButton4.setBackground(new java.awt.Color(110, 123, 129));
+		jButton4.setBackground(new java.awt.Color(170, 187, 195));
 		jButton4.setFont(new java.awt.Font("Microsoft YaHei UI", 0, 23));
 		jButton4.setForeground(new java.awt.Color(255, 255, 255));
 		jButton4.setText("\u64cd\u4f5c\u8bb0\u5f55");
@@ -117,11 +117,11 @@ public class Showreason extends javax.swing.JFrame {
 				new Showreason().setVisible(true);
 			}
 		});
-		button.setText("\u7528\u6237\u7BA1\u7406");
+		button.setText("\u5220\u9664\u539F\u56E0");
 		button.setForeground(Color.WHITE);
 		button.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 23));
 		button.setBorder(null);
-		button.setBackground(new Color(170, 187, 195));
+		button.setBackground(new Color(110, 123, 129));
 
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
 				jPanel2);
@@ -222,6 +222,7 @@ public class Showreason extends javax.swing.JFrame {
 
 	private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
+		new Operationview().setVisible(true);
 	}
 
 	private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {

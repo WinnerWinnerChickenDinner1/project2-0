@@ -55,6 +55,7 @@ public class View extends JFrame {
 	private JSlider slider;
 	private JPanel panel_1;
 	JTextField textField;
+	private JMenu menu_1;
 
 	/**
 	 * Launch the application.
@@ -69,7 +70,7 @@ public class View extends JFrame {
 	public View() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(AdminLoginview.class.getResource("/img/littlelogo.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 640, 480);
+		setBounds(100, 100, 1131, 637);
 		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -83,6 +84,21 @@ public class View extends JFrame {
 		closemenu = new JMenuItem("\u9000\u51FA");
 		menu.add(closemenu);
 		
+		menu_1 = new JMenu("\u5173\u95ED");
+		menu_1.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				PlayerMain.stop();
+				dispose();
+			}
+		});
+		menu_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+			}
+		});
+		menuBar.add(menu_1);
+		
 		openmenu.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
@@ -94,7 +110,7 @@ public class View extends JFrame {
 
 			public void actionPerformed(ActionEvent e) {
  
-				PlayerMain.exit();
+				setVisible(false);
 			}
 		});
 		

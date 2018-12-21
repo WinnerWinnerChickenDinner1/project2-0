@@ -664,7 +664,6 @@ public class Shopview extends javax.swing.JFrame {
 	private javax.swing.JSeparator jSeparator1;
 	private javax.swing.JTextField jTextField1;
 	private Object[][] obj = new Company().showCommodity();
-	
 	private String[] getCommnames() {
 		String[] cnames = new String[obj.length];
 		for(int i=0;i<obj.length;i++) {

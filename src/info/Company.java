@@ -14,6 +14,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import tool.Client;
+import view.Adminview;
 
 public class Company implements Serializable{
 	private String ID;
@@ -34,22 +35,30 @@ public class Company implements Serializable{
 	 * 影厅停止原因（没完成）
 	 */
 	public Company(){}
-	public void CLogin(String ID,String pw){
+	public String CLogin(String ID,String pw){
 		//公司登陆
 		try {
-			if(ID.equals("") || pw.equals("")){
-				JOptionPane.showMessageDialog(null, "您未输入账号或密码");	
-				}
+			if(ID.equals("") ){
+				JOptionPane.showMessageDialog(null, "您未输入账号");
+				return "no";
+				}else
+			if(pw.equals("")){
+				JOptionPane.showMessageDialog(null, "您未输入密码");
+				return "no";
+			}
 			else{
 			Client c = new Client();
 		Company cm = c.Clogin(ID, pw);
 		if(cm==null){
 			JOptionPane.showMessageDialog(null, "登录失败");
+			return "no";
 		}
 		else{
 		JOptionPane.showMessageDialog(null, "登录成功");
+		return "ok";
 		}
 			}
+			
 		}
 			
 
@@ -60,6 +69,7 @@ public class Company implements Serializable{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return "no";
 	}
 	public void setNewFilm(String Fname,String dir,String star,float price,String path){
 		//电影上新
@@ -298,17 +308,16 @@ public class Company implements Serializable{
 	  return Hname;  
    }
  
-   public String deletemoviehall(String Hname) {
+   public void deletemoviehall(String pid) {
 	//删除影厅
 	   
 	   try {
 		   Client c = new Client();
-		c.deletehall(Hname);
+		c.deletehall(pid);
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 	}
-		  return Hname;
 	
 }
    public List<Object[]> findhall(){

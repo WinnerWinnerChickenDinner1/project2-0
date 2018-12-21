@@ -333,6 +333,7 @@ public class Adminview extends javax.swing.JFrame {
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
+		new Adminview().setVisible(true);
 	}
 
 	private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {

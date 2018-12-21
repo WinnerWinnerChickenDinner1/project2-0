@@ -63,7 +63,7 @@ import javax.swing.JOptionPane;
 		static ObjectInputStream ois;
 		Socket s;
 		public Client() throws UnknownHostException, IOException{
-			s = new Socket("localhost",51512);
+			s = new Socket("192.168.137.1",51512);
 			 oos = new ObjectOutputStream(s.getOutputStream());
 		     ois = new ObjectInputStream(s.getInputStream());
 		}
@@ -422,13 +422,15 @@ import javax.swing.JOptionPane;
 					oos.writeInt(SHOWHALL);
 					oos.flush();
 					List halllist = (List) ois.readObject();
-					hall = new Object[halllist.size()][4];
+					hall = new Object[halllist.size()][6];
 					for(int i = 0;i<halllist.size();i++){
 						Object[] strs = (Object[]) halllist.get(i);
 						hall[i][0] = strs[0];
 						hall[i][1] = strs[1];
 						hall[i][2] = strs[2];
 						hall[i][3] = strs[3];
+						hall[i][4] = strs[4];
+						hall[i][5] = strs[5];
 					}
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -439,10 +441,10 @@ import javax.swing.JOptionPane;
 				}
 				return hall;
 			}	
-			public void deletehall(String Hname) throws IOException{//删除影厅
+			public void deletehall(String pid) throws IOException{//删除影厅
 				oos.writeInt(DELETEHALL);
 				oos.flush();
-				oos.writeUTF(Hname);
+				oos.writeUTF(pid);
 				oos.flush();
 				String i;
 				i=ois.readUTF();
@@ -590,7 +592,7 @@ import javax.swing.JOptionPane;
 				}
 		     }
 			 
-			 private byte[] writeimg(String path) {
+			 private static byte[] writeimg(String path) {
 					//可能溢出,简单起见就不考虑太多,如果太大就要另外想办法，比如一次传入固定长度byte[]
 					byte[] bytes = null;
 					try {
@@ -733,12 +735,10 @@ import javax.swing.JOptionPane;
 			 }
 			
 		public static void main(String[] args) {
+			byte[] b = writeimg("C:\\Users\\ASUS\\Desktop\\java\\170092144017144096.jpg");
 			try {
-				new Client();
-			} catch (UnknownHostException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
+				buff2Image(b, "immm\\img.jpg");
+			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

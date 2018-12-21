@@ -233,9 +233,11 @@ public class AdminLoginview extends javax.swing.JFrame {
 	}
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {
-		new Company().CLogin(jTextField1.getText(), jPasswordField1.getText());
-		new Adminview().setVisible(true);
-		setVisible(false);
+		String s= new Company().CLogin(jTextField1.getText(), jPasswordField1.getText());
+		if(s.equals("ok")) {
+			this.setVisible(false);
+			new Adminview().setVisible(true);
+		}
 
 	}
 

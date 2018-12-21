@@ -16,12 +16,15 @@ import uk.co.caprica.vlcj.runtime.RuntimeUtil;
 public class PlayerMain {
 	static View frame;
  
+	public static void main(String[] args) {
+		new PlayerMain().init("C:\\Users\\ASUS\\Desktop\\trailer.mp4", "aaa");
+	}
 	public void  init(String path,String name) {
  
-		 NativeLibrary.addSearchPath(  
-				    RuntimeUtil.getLibVlcLibraryName(), "d:\\VLC\\sdk\\lib"); 
-		 System.out.println(RuntimeUtil.getLibVlcLibraryName());
-		 Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(),LibVlc.class);  
+//		 NativeLibrary.addSearchPath(  
+//				    RuntimeUtil.getLibVlcLibraryName(), "d:\\VLC\\sdk\\lib"); 
+//		 System.out.println(RuntimeUtil.getLibVlcLibraryName());
+//		 Native.loadLibrary(RuntimeUtil.getLibVlcLibraryName(),LibVlc.class);  
 				  
 				  EventQueue.invokeLater(new Runnable() {
 						public void run() {

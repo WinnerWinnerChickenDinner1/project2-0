@@ -155,7 +155,7 @@ public class Hallview extends javax.swing.JFrame {
         obj=new Company().showmoviehall();
 		jTable1.setModel(new javax.swing.table.DefaultTableModel(
 				obj, new String[] { "影厅编号",
-						"放映电影", "放映时间", "容量" }));
+						"放映电影", "放映时间", "容量","播放时长","播放序号" }));
 		jScrollPane1.setViewportView(jTable1);
 		jTable1.addAncestorListener(new javax.swing.event.AncestorListener() {
 			public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
@@ -310,12 +310,13 @@ public class Hallview extends javax.swing.JFrame {
 			why  =JOptionPane.showInputDialog("请输入修改原因");
 			String happened = "删除了"+obj[i][0].toString()+"号厅放映的"+obj[i][1]+",放映时间为："+obj[i][2].toString();
 			
-		new Company().deletemoviehall(obj[i][0].toString());
+		new Company().deletemoviehall(obj[i][5].toString());
 		new Company().saveReason(why, happened);
-		 obj=new Company().showmoviehall();
-			jTable1.setModel(new javax.swing.table.DefaultTableModel(
-					obj, new String[] { "影厅编号",
-							"放映电影", "放映时间", "容量" }));
+		obj=new Company().showmoviehall();
+		jTable1.setModel(new javax.swing.table.DefaultTableModel(
+				obj, new String[] { "影厅编号",
+						"放映电影", "放映时间", "容量","播放时长","播放序号" }));
+		
 		}
 	               	}
 	private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -352,6 +353,7 @@ public class Hallview extends javax.swing.JFrame {
 
 	private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
+		new Hallview().setVisible(true);
 	}
 
 	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {

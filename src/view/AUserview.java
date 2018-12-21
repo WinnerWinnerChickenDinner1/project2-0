@@ -125,7 +125,7 @@ public class AUserview extends javax.swing.JFrame {
 		button.setForeground(Color.WHITE);
 		button.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 23));
 		button.setBorder(null);
-		button.setBackground(new Color(110, 123, 129));
+		button.setBackground(new Color(170, 187, 195));
 
 		javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(
 				jPanel2);
@@ -261,6 +261,7 @@ public class AUserview extends javax.swing.JFrame {
 	}
 	private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {
 		// TODO add your handling code here:
+		new AUserview().setVisible(true);
 	}
 
 	private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {

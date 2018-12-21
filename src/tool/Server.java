@@ -5,6 +5,7 @@ import info.Employee;
 import info.Film;
 import info.ManagerHall;
 
+import java.awt.TextArea;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -22,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import javax.swing.JTextArea;
 
 import com.mysql.fabric.xmlrpc.base.Data;
 import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
@@ -69,16 +72,12 @@ public class Server implements Runnable{
 	
 	ObjectInputStream ois;
 	ObjectOutputStream oos;
+	ServerSocket ss;
 	Socket s;
-	public Server() throws IOException, ClassNotFoundException, SQLException {
-		
-		 ServerSocket ss = new ServerSocket(51512);
-		 System.out.println(ss);
-		 while(true){
-		 s = ss.accept();
-		 System.out.println(s);
-		 new Thread(this).start();
-		 }
+	TextArea text;
+	public Server(TextArea text) throws IOException, ClassNotFoundException, SQLException {
+		this.text = text;
+		 ss = new ServerSocket(51512);
 		}
 public void  ELogin() throws IOException, SQLException, ClassNotFoundException{//员工登录
 	String ID = ois.readUTF();
@@ -432,7 +431,7 @@ public void showvip(){//展示所有vip
 		float price = ois.readFloat();
 		String content = ois.readUTF();
 		byte[] img = (byte[]) ois.readObject();
-		String path = "E:/commodityimg/"+Cname+".jpg";
+		String path = "commodityimg/"+Cname+".jpg";
 		if(img != null) {
 			try {
 				buff2Image(img, path);
@@ -457,10 +456,12 @@ public void showvip(){//展示所有vip
 			Timestamp time = rs.getTimestamp(3);
 			SimpleDateFormat simpledate = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 			String starttime = simpledate.format(time);
+			int playtime = rs.getInt(4);
 			int x = rs.getInt(5);
 			int y = rs.getInt(6);
 			int a =(x)*(y); 
-			Object[] hallmanage = {Hname,Fname,starttime,a};
+			String playid = rs.getString(7);
+			Object[] hallmanage = {Hname,Fname,starttime,a,playtime,playid};
 			halllist.add(hallmanage);
 		}
 		
@@ -468,9 +469,13 @@ public void showvip(){//展示所有vip
 		oos.flush();
 	}
 	public void deletehall() throws IOException, SQLException, ClassNotFoundException{
-		String Hname = ois.readUTF();
-		String sql = "delete from hallmanage where Hname='"+Hname+"'";
+		String pid = ois.readUTF();
+		String sql = "delete from hallmanage where PlayID='"+pid+"'";
+		String sql1 = "delete from Seat where PlayID='"+pid+"'";
+		System.out.println(sql);
+		System.out.println(sql1);
 		Datahandle.getStatement().executeUpdate(sql);
+		Datahandle.getStatement().executeUpdate(sql1);
 		oos.writeUTF("ok");
 		oos.flush();
 	}
@@ -531,7 +536,7 @@ public void showvip(){//展示所有vip
 			String dirctor = ois.readUTF();
 			String star = ois.readUTF();
 			byte[] b = (byte[]) ois.readObject();
-			String path = "E:/filmimg/"+fname+".jpg";
+			String path = "filmimg/"+fname+".jpg";
 			buff2Image(b, path);
 			float price = ois.readFloat();
 			String sql = "insert into film values('"+fid+"','"+fname+"','"+dirctor+"','"+star+"','"+path+"',0,"+price+")";
@@ -555,7 +560,7 @@ public void showvip(){//展示所有vip
 			String fname = ois.readUTF();
 			String dirctor = ois.readUTF();
 			String star = ois.readUTF();
-			String path = "E:/filmimg/"+fname+".jpg";
+			String path = "filmimg/"+fname+".jpg";
 			byte[] b = (byte[]) ois.readObject();
 			if(b != null) {
 				buff2Image(b, path);
@@ -718,104 +723,137 @@ public void showvip(){//展示所有vip
 	public void run() {
 		// TODO Auto-generated method stub
 		 try {
+			 SimpleDateFormat simp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			ois = new ObjectInputStream(s.getInputStream()); 
 			 oos = new ObjectOutputStream(s.getOutputStream());
 			 int i ;
 			 i = ois.readInt();
 			 if(i==ELOGIN){
-				 ELogin();		
+				 text.append(simp.format(new Date()).toString()+"\t员工登录\n");
+				 ELogin();				
 			 }
 			 if(i==CLOGIN){
+				 text.append(simp.format(new Date()).toString()+"\t公司登录\n");
 				 CLogin();
 			 }
 			if (i==TRANSACTION){
+				 text.append(simp.format(new Date()).toString()+"\t办理会员用户\n");
 				TRANSACTION();
 			}
 			if(i==NOTE){
+				 text.append(simp.format(new Date()).toString()+"\t生成员工操作记录\n");
 				MakeOpreationNote();
 			}
 			if(i==ADDMON){
+				 text.append(simp.format(new Date()).toString()+"\t充值\n");
 				addmoney();
 			}
 			if(i==SHOWVIP){
+				 text.append(simp.format(new Date()).toString()+"\t查看所有VIP\n");
 				showvip();
 			}
 			if(i==DOWNVIP){
+				 text.append(simp.format(new Date()).toString()+"\t删除VIP\n");
 				downvip();
 			}
 			if(i==GETVIP){
+				 text.append(simp.format(new Date()).toString()+"\t查找VIP\n");
 				getVip();
 			}
 			if(i==GETCOMMODITY){
+				 text.append(simp.format(new Date()).toString()+"\t查找商品\n");
 				getCommodity();
 			}
 			if(i==MANAGEHALL){
+				 text.append(simp.format(new Date()).toString()+"\t影厅管理\n");
 				managerHall();
 			}
 			if(i==SHOWFILM){
+				 text.append(simp.format(new Date()).toString()+"\t查看所有电影\n");
 				showFilm();
 			}
 			if(i==SHOWCOMMODITY){
+				 text.append(simp.format(new Date()).toString()+"\t查看所有商品\n");
 				showCommodity();
 			}
 			if(i==ADDCOMMODITY){
+				 text.append(simp.format(new Date()).toString()+"\t添加商品\n");
 				Addcommodity();
 			}
 			if(i==DELETECOMMODITY){
+				 text.append(simp.format(new Date()).toString()+"\t删除商品\n");
 				Deletecommodity();
 			}
 			if(i==GETSELECTEDSEAT) {
+				 text.append(simp.format(new Date()).toString()+"\t选座功能\n");
 				getSelectedSeat();
 			}
 			if(i==GETTICKET) {
+				 text.append(simp.format(new Date()).toString()+"\t购票功能\n");
 				getTicket();
 			}
 			if(i==AMENDCOMMODITY){
+				 text.append(simp.format(new Date()).toString()+"\t修改商品\n");
 				Amendcommodity();
 			}
 			if(i==SHOWHALL){
+				 text.append(simp.format(new Date()).toString()+"\t显示所有影厅\n");
 				showhall();
 			}
 			if(i==DELETEHALL){
+				 text.append(simp.format(new Date()).toString()+"\t删除影厅\n");
 				deletehall();
 			}
 			if(i==ADDHALL){
+				 text.append(simp.format(new Date()).toString()+"\t添加影厅\n");
 				addhall();
 			}
 			if(i==FINDHALL){
+				 text.append(simp.format(new Date()).toString()+"\t查找影厅\n");
 				findhall();
 			}
 			if(i==AMENDHALL) {
+				 text.append(simp.format(new Date()).toString()+"\t修改影厅\n");
 				Amendhall();
 			}
 			if(i==ADDFILM) {
+				 text.append(simp.format(new Date()).toString()+"\t添加电影\n");
 				addFilm();
 			}
 			if(i==DELETEFLIM) {
+				 text.append(simp.format(new Date()).toString()+"\t删除电影\n");
 				Deleteflim();
 			}
 			if(i==UPDFILM) {
+				 text.append(simp.format(new Date()).toString()+"\t修改电影\n");
 				updFilm();
 			}
 			if(i==GETCOMMCOVER) {
+				 text.append(simp.format(new Date()).toString()+"\t获取商品封面\n");
 				getCommcover();
 			}
 			if(i==GETFILMCOVER) {
+				 text.append(simp.format(new Date()).toString()+"\t获取电影封面\n");
 				getFilmcover();
 			}
 			if(i==COMSUME) {
+				 text.append(simp.format(new Date()).toString()+"\t扣费\n");
 				comsume();
 			}
 			if(i==SHOWOPERATION) {
+				 text.append(simp.format(new Date()).toString()+"\t查看所有操作记录\n");
 				showoperation();
 			}
 			if(i==GETTRAILER) {
+				 text.append(simp.format(new Date()).toString()+"\t获取预告片\n");
 				getTrailer();
 			}
 			if(i==REASON) {
+				 text.append(simp.format(new Date()).toString()+"\t上传删除原因\n");
 				reason();
 			}
 			if(i==SHOWREASON) {
+				 text.append(simp.format(new Date()).toString()+"\t查看所有删除原因\n");
 				showReason();
 			}
 		} catch (IOException e) {
@@ -829,23 +867,6 @@ public void showvip(){//展示所有vip
 			e.printStackTrace();
 		}
 		 	
-	}
-	
-	
-
-	public static void main(String[] args) {
-		try {
-			new Server();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	static void buff2Image(byte[] b,String tagSrc) throws Exception
