@@ -63,7 +63,7 @@ import javax.swing.JOptionPane;
 		static ObjectInputStream ois;
 		Socket s;
 		public Client() throws UnknownHostException, IOException{
-			s = new Socket("192.168.137.1",51512);
+			s = new Socket("localhost",51512);
 			 oos = new ObjectOutputStream(s.getOutputStream());
 		     ois = new ObjectInputStream(s.getInputStream());
 		}

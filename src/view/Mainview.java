@@ -3029,7 +3029,11 @@ public class Mainview extends javax.swing.JFrame implements ActionListener {
 				hot = flist.get(i).getHot();
 				jLabel7.setForeground(Color.red);
 				jLabel8.setText(Float.toString(flist.get(i).getPrice()));		
-				if(jComboBox2.getItemCount() == 0) {JOptionPane.showMessageDialog(null, "该电影暂时没有放映信息");}
+				if(jComboBox2.getItemCount() == 0) {JOptionPane.showMessageDialog(null, "该电影暂时没有放映信息");
+					waitsize = null;
+					
+					addlistenner();
+				}
 				
 			}
 		});
@@ -3051,10 +3055,10 @@ public class Mainview extends javax.swing.JFrame implements ActionListener {
 				if(jComboBox1.getSelectedIndex() != -1 || jComboBox2.getSelectedIndex() != -1) {
 					for(int i =0;i<mlist.size();i++) {
 						if(jComboBox1.getSelectedItem().equals(mlist.get(i).getHname())  && (jComboBox2.getSelectedItem().equals(mlist.get(i).getStarttime()))) {//不能这样写
-							System.out.println(":"+mlist.get(i).getPlayID());
 							System.out.println("选项栏自动生成座位");
 							seat = new Employee().chooseSeat(mlist.get(i).getX(),mlist.get(i).getY(),mlist.get(i).getPlayID());
 							pid = mlist.get(i).getPlayID();
+							waitsize = new int[5][3];
 							addlistenner();
 						}
 					}
@@ -3075,9 +3079,15 @@ public class Mainview extends javax.swing.JFrame implements ActionListener {
 						System.out.println("选项栏自动生成座位");
 						seat = new Employee().chooseSeat(mlist.get(i).getX(),mlist.get(i).getY(),mlist.get(i).getPlayID());
 						pid = mlist.get(i).getPlayID();
+						waitsize = new int[5][3];
 						addlistenner();
 					}
 				}
+				}else {
+					seat = new int[1][0];
+					pid = "";
+					waitsize = new int[5][3];
+					addlistenner();
 				}
 			}
 		});
